@@ -2,14 +2,14 @@
 //inject a matchRef, isRef, and a getRef function?
 //could use the same pattern with objects.
 
-//I don't really want to force __id__
+//I don't really want to force id
 //should be able to use anything, aslong as you 
 
 
 function shallowEqual (a, b) {
     if(isObject(a) 
       && isObject(b) 
-      && (a.__id__ == b.__id__ || a === b))
+      && (a.id == b.id || a === b))
       return true
     if(a && !b) return false
     return a == b
@@ -21,7 +21,7 @@ function equal (a, b) {
   if(Array.isArray(a))
     if(a.length != b.length) return false
   if(isObject(a) && isObject(b)) {
-    if (a.__id__ == b.__id__ || a === b)
+    if (a.id == b.id || a === b)
       return true
     for(var i in a)
       if(!equal(a[i], b[i])) return false
@@ -55,8 +55,8 @@ function findRefs(obj, refs) {
       findRefs(obj[k], refs)
   }
   
-  if(obj.__id__ && !refs[obj.__id__])
-    refs[obj.__id__] = obj
+  if(obj.id && !refs[obj.id])
+    refs[obj.id] = obj
   return refs
 }
 
@@ -72,14 +72,14 @@ function isObject (o) {
 }
 
 function isRef(x) {
-  return x ? x.__id__ : undefined
+  return x ? x.id : undefined
 }
 
 function sameRef(a, b) {
   return a && b && isRef(a) == isRef(b)
 }
 
-//traverse o, and replace every object with __id__ with a pointer.
+//traverse o, and replace every object with id with a pointer.
 //make diffing references easy.
 
 
@@ -145,12 +145,12 @@ exports.diff = function (a, b) {
     seen.push(k)
 
  function isSeen(o) {
-    if(isRef(o)) return ~seen.indexOf(o.__id__)
+    if(isRef(o)) return ~seen.indexOf(o.id)
     return true 
   }
   function addSeen(o) {
     if(!isRef(o)) return o
-    if(!isSeen(o)) seen.push(o.__id__)
+    if(!isSeen(o)) seen.push(o.id)
     return o
   }
 
@@ -177,7 +177,7 @@ exports.diff = function (a, b) {
 // it will break.
 // TODO escape strings so this is safe
 
-   //ah, treat root like it's a __id__
+   //ah, treat root like it's a id
 
    var isRoot = path.length === 1 && path[0] === 'root'
 
