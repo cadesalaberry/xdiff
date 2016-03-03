@@ -117,12 +117,6 @@ assertDiff(
 
 */
 
-assertDiff(
-  [null],
-  [undefined],
-  undefined 
-)
-
 log('passed')
 
 
