@@ -13,6 +13,8 @@
   "dependencies": {
     "adiff": "~0.2.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "assertions": "^2.3.4"
+  },
   "optionalDependencies": {}
 }
